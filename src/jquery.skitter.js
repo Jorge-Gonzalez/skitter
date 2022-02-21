@@ -73,6 +73,9 @@
     // Actual image (internal)
     image_atual: null,
 
+    // Actual alt text (internal)
+    alt_atual: null,
+
     // Actual link (internal)
     link_atual: null,
 
@@ -343,8 +346,8 @@
       this.settings.images_links = [];
       
       // Add image, link, animation type and label
-      var addImageLink = function (link, src, animation_type, label, target) {
-        self.settings.images_links.push([src, link, animation_type, label, target]);
+      var addImageLink = function (link, src, animation_type, label, target, alt) {
+        self.settings.images_links.push([src, link, animation_type, label, target, alt]);
         if (self.settings.thumbs) {
           var dimension_thumb = '';
           if (self.settings.width_skitter > self.settings.height_skitter) {
@@ -376,11 +379,12 @@
             var ul = $('<ul></ul>');
             $(xml).find('skitter slide').each(function(){
               ++u;
-              var link      = ($(this).find('link').text()) ? $(this).find('link').text() : '#';
-              var src       = $(this).find('image').text();
+              var link            = ($(this).find('link').text()) ? $(this).find('link').text() : '#';
+              var src             = $(this).find('image').text();
+              var alt             = ($(this).find('image').attr('alt')) ? $(this).find('image').attr('alt') : '';
               var animation_type  = $(this).find('image').attr('type');
-              var label       = $(this).find('label').text();
-              var target      = ($(this).find('target').text()) ? $(this).find('target').text() : '_self';
+              var label           = $(this).find('label').text();
+              var target          = ($(this).find('target').text()) ? $(this).find('target').text() : '_self';
               addImageLink(link, src, animation_type, label, target);
             });
           }
@@ -396,10 +400,11 @@
           ++u;
           var link      = ($(this).find('a').length) ? $(this).find('a').attr('href') : '#';
           var src       = $(this).find('img').attr('src');
+          var alt       = $(this).find('img').attr('alt') || "";
           var animation_type  = $(this).find('img').attr('class');
           var label       = $(this).find('.label_text').html();
           var target      = ($(this).find('a').length && $(this).find('a').attr('target')) ? $(this).find('a').attr('target') : '_self';
-          addImageLink(link, src, animation_type, label, target);
+          addImageLink(link, src, animation_type, label, target, alt);
         });
       }
       
@@ -517,6 +522,7 @@
       this.settings.images_links.sort(function(a,b) {return Math.random() - 0.5;});
       
       this.settings.image_atual   = this.settings.images_links[0][0];
+      this.settings.alt_atual   = this.settings.images_links[0][5];
       this.settings.link_atual  = this.settings.images_links[0][1];
       this.settings.label_atual   = this.settings.images_links[0][3];
       this.settings.target_atual  = this.settings.images_links[0][4];
@@ -680,7 +686,10 @@
       self.windowFocusOut();
       self.setLinkAtual();
       
-      self.skitter_box.find('.image > a img').attr({'src': self.getCurrentImage()});
+      self.skitter_box.find('.image > a img').attr({
+        'src': self.getCurrentImage(),
+        'alt': self.settings.alt_atual
+      });
       img_link = self.skitter_box.find('.image > a');
       img_link = self.resizeImage(img_link);
       img_link.find('img').fadeIn(1500);
