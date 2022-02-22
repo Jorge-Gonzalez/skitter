@@ -2773,7 +2773,7 @@
             self.timer = setTimeout(function() { self.completeMove(); }, self.settings.interval - self.settings.elapsedTime);
             self.skitter_box.find('.image_main').attr({
               'src': self.getCurrentImage(),
-              'alt': this.settings.alt_atual
+              'alt': self.settings.alt_atual
             });
             self.skitter_box.find('.image > a').attr({'href': self.settings.link_atual});
           }
@@ -3038,7 +3038,7 @@
               self.timer = setTimeout(function() { self.completeMove(); }, self.settings.interval - self.settings.elapsedTime);
               self.skitter_box.find('.image_main').attr({
                 'src': self.getCurrentImage(),
-                'alt': this.settings.alt_atual
+                'alt': self.settings.alt_atual
               });
               self.skitter_box.find('.image > a').attr({'href': self.settings.link_atual});
             }
@@ -3267,7 +3267,7 @@
             self.timer = setTimeout(function() { self.completeMove(); }, self.settings.interval - self.settings.elapsedTime);
             self.skitter_box.find('.image_main').attr({
               'src': self.getCurrentImage(),
-              'alt': this.settings.alt_atual
+              'alt': self.settings.alt_atual
             });
             self.skitter_box.find('.image > a').attr({'href': self.settings.link_atual});
           }
